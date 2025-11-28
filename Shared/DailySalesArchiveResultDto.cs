@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Apple1_Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apple1_Domain.Models
+namespace Shared
 {
-    public class DailySalesArchive : BaseEntity
+    public class DailySalesArchiveResultDto
     {
         public string ProductName { get; set; }
         public int Quantity { get; set; }

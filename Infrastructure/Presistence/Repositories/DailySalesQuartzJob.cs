@@ -1,4 +1,5 @@
 ﻿using Apple1_Domain.Contracts;
+using Apple1_Services.Abstractions;
 using Quartz;
 using System;
 using System.Collections.Generic;

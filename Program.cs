@@ -1,11 +1,13 @@
 
 using Apple1_Domain.Contracts;
+using Apple1_Services.Abstractions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Presistence.Data;
 using Presistence.Repositories;
-using Quartz;   
-
+using Quartz;
+using System.Reflection;
 namespace Apple1
 {
     public class Program
@@ -21,9 +23,21 @@ namespace Apple1
             builder.Services.AddDbContext<Apple1DbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IArchiveDailySalesService, ArchiveDailySalesService>();
-            builder.Services.AddScoped<IMapper, Mapper>();
+            // Ensure you have 'using System.Reflection;' at the top of your file.
+
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                // This explicitly uses the overload that takes a configuration action.
+                // Inside the action, AddMaps is called with the assemblies.
+                // This is the most unambiguous way to tell AutoMapper to scan the assemblies.
+                cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+            });
+
+
+
+
 
             builder.Services.AddQuartz(q =>
             {

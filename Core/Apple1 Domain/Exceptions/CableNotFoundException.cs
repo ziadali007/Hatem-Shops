@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apple1_Domain.Contracts
+namespace Apple1_Domain.Exceptions
 {
-    public interface IArchiveDailySalesService
+    public class CableNotFoundException(string message) : Exception(message)
     {
-        Task ArchiveAsync();
-
     }
 }
