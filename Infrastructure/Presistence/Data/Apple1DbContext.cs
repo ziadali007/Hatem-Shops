@@ -30,6 +30,8 @@ namespace Presistence.Data
         public DbSet<DailySales> dailySales { get; set; }
         public DbSet<DailySalesArchive> dailySalesArchives { get; set; }
 
+        public DbSet<Sale> Sales { get; set; }
+
 
 
 

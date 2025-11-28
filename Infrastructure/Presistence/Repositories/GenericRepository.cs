@@ -5,6 +5,7 @@ using Presistence.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,21 @@ namespace Presistence.Repositories
         {
             return await _apple1.Set<T>().FirstOrDefaultAsync(e => e.Name == name);
         }
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _apple1.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _apple1.Set<T>().Where(predicate).ToListAsync();
+        }
+
+        public async Task<decimal> SumAsync(Expression<Func<T, bool>> predicate, Expression<Func<T, decimal>> selector)
+        {
+            return await _apple1.Set<T>()
+                        .Where(predicate)
+                        .SumAsync(selector);
+        }
         public async Task AddAsync(T entity)
         {
             await _apple1.Set<T>().AddAsync(entity);
@@ -39,6 +55,5 @@ namespace Presistence.Repositories
         {
             _apple1.Set<T>().Remove(entity);
         }
-
     }
 }

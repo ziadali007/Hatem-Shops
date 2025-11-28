@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="Core\**" />
     <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Shared\**" />
     <Content Remove="Core\**" />
     <Content Remove="Infrastructure\**" />
+    <Content Remove="Shared\**" />
     <EmbeddedResource Remove="Core\**" />
     <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Shared\**" />
     <None Remove="Core\**" />
     <None Remove="Infrastructure\**" />
+    <None Remove="Shared\**" />
   </ItemGroup>
 
   <ItemGroup>
