@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="Core\Apple1 Services\Apple1 Services.csproj" />
     <ProjectReference Include="Infrastructure\Presentation\Presentation.csproj" />
     <ProjectReference Include="Infrastructure\Presistence\Presistence.csproj" />
   </ItemGroup>

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Presistence\Presistence.csproj" />
     <ProjectReference Include="..\Apple1 Domain\Apple1 Domain.csproj" />
     <ProjectReference Include="..\Apple1 Services.Abstractions\Apple1 Services.Abstractions.csproj" />
   </ItemGroup>

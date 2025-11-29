@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presistence.Repositories
+namespace Apple1_Services
 {
     public class ArchiveDailySalesService : IArchiveDailySalesService
     {
