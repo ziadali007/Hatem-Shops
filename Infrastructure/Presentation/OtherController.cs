@@ -1,0 +1,55 @@
+﻿using Apple1_Services.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Shared;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Presentation
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class OtherController(IServiceManager serviceManager) : ControllerBase
+    {
+        [HttpGet]
+        public async Task<IActionResult> GetAllOthers()
+        {
+            var others = await serviceManager.OthersService.GetAllOthersAsync();
+            if (others == null || !others.Any()) return NotFound("No other items found.");
+            return Ok(others);
+        }
+
+        [HttpGet("{Name}")]
+        public async Task<IActionResult> GetOtherByName([FromQuery] string name)
+        {
+            var other = await serviceManager.OthersService.GetOtherByNameAsync(name);
+            if (other == null) return NotFound($"Other item with name '{name}' not found.");
+            return Ok(other);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOther([FromBody] AddOthersResultDto otherDto)
+        {
+            if (otherDto == null) return BadRequest("Other item data is null.");
+            await serviceManager.OthersService.CreateOtherAsync(otherDto);
+            return Ok(otherDto);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateOther([FromBody] AddOthersResultDto otherDto)
+        {
+            if (otherDto == null) return BadRequest("Other item data is null.");
+            await serviceManager.OthersService.UpdateOtherAsync(otherDto);
+            return Ok(otherDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOther(int id)
+        {
+            await serviceManager.OthersService.DeleteOtherAsync(id);
+            return Ok($"Other item with ID '{id}' has been deleted.");
+        }
+    }
+}

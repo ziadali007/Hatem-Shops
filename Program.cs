@@ -1,5 +1,6 @@
 
 using Apple1_Domain.Contracts;
+using Apple1_Services;
 using Apple1_Services.Abstractions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;

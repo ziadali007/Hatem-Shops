@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.22">
       <PrivateAssets>all</PrivateAssets>
@@ -27,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Apple1 Domain\Apple1 Domain.csproj" />
     <ProjectReference Include="..\..\Core\Apple1 Services.Abstractions\Apple1 Services.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Core\Apple1 Services\Apple1 Services.csproj" />
   </ItemGroup>
 
 </Project>
