@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Apple1 Service\**" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Elsha3er  Shared\**" />
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Shared\**" />
+    <Content Remove="Apple1 Service\**" />
+    <Content Remove="Core\**" />
+    <Content Remove="Elsha3er  Shared\**" />
+    <Content Remove="Infrastructure\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Apple1 Service\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Elsha3er  Shared\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Apple1 Service\**" />
+    <None Remove="Core\**" />
+    <None Remove="Elsha3er  Shared\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.22">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="Core\Elsha3er Services\Elsha3er Services.csproj" />
+    <ProjectReference Include="Infrastructure\Elsha3er Presentation\Elsha3er Presentation.csproj" />
+    <ProjectReference Include="Infrastructure\Elsha3er Presistence\Elsha3er Presistence.csproj" />
+  </ItemGroup>
+
+</Project>
