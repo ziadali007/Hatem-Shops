@@ -25,8 +25,12 @@ namespace Apple1
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             builder.Services.AddScoped<IArchiveDailySalesService, ArchiveDailySalesService>();
-            // Ensure you have 'using System.Reflection;' at the top of your file.
+            builder.Services.Configure<AdminSettings>(
+              builder.Configuration.GetSection("AdminSettings"));
+
+
 
             builder.Services.AddAutoMapper(cfg =>
             {

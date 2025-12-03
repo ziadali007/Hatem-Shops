@@ -12,7 +12,9 @@ namespace Shared
         public int Quantity { get; set; }
         public decimal Price { get; set; }
 
+        public string Type { get; set; }
         public decimal Total { get; set; }  // mapped
+        public DateTime Time { get; set; } = DateTime.Now;
 
     }
 }

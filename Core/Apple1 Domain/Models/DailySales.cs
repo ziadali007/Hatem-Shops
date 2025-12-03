@@ -9,9 +9,8 @@ namespace Apple1_Domain.Models
 {
     public class DailySales : BaseEntity
     {
-        public string ProductName { get; set; }
-
-        public int TotalQuantity { get; set; }
+       
+        public decimal Price { get; set; }
         public decimal TotalAmount { get; set; }
 
         public DateTime Date { get; set; } = DateTime.UtcNow.Date;

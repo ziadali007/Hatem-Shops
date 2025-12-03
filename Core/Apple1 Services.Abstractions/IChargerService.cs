@@ -10,9 +10,9 @@ namespace Apple1_Services.Abstractions
     public interface IChargerService
     {
         Task<IEnumerable<ChargerResultDto>> GetAllChargersAsync();
-        Task<ChargerResultDto> GetChargerByNameAsync(string name);
+        Task<IEnumerable<ChargerResultDto>> GetChargerByNameAsync(string name);
         Task CreateChargerAsync(AddChargerResultDto chargerDto);
-        Task UpdateChargerAsync(AddChargerResultDto chargerDto);
+        Task UpdateChargerAsync(ChargerResultDto chargerDto);
         Task DeleteChargerAsync(int id);
     }
 }

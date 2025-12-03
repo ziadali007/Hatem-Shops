@@ -13,7 +13,9 @@ namespace Apple1_Services.Mapping_Profiles
     {
         public CoverProfile()
         {
-            CreateMap<Cover, CoverResultDto>().ReverseMap();
+            CreateMap<Cover, CoverResultDto>().ReverseMap().ForMember(S => S.Id, SO => SO.MapFrom(Src => Src.CoverId));
+            CreateMap<CoverResultDto, Cover>().ReverseMap().ForMember(S => S.CoverId, SO => SO.MapFrom(Src => Src.Id));
+
             CreateMap<AddCoverResultDto, Cover>().ReverseMap();
         }
     }

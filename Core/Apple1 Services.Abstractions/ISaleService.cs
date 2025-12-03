@@ -12,6 +12,6 @@ namespace Apple1_Services.Abstractions
         Task AddSaleAsync(AddSaleResultDto dto);
         Task<IEnumerable<SaleResultDto>> GetTodaySalesAsync();
         Task DeleteSaleAsync(int id);
-        Task<decimal> GetTodayTotalAmountAsync();
+        //Task<decimal> GetTodayTotalAmountAsync();
     }
 }

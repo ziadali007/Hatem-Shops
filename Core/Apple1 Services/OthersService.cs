@@ -21,12 +21,14 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<OthersResultDto> GetOtherByNameAsync(string name)
+        public async Task<IEnumerable<OthersResultDto>> GetOtherByNameAsync(string name)
         {
-            var other =await unitOfWork.GetRepository<Others>()
-                                .GetAsync(c => c.Name == name);
+            name = name.Replace(" ", " ").ToLower();
+            var other = await unitOfWork.GetRepository<Others>()
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().ToLower().Contains(name));
             if (other == null) throw new OthersNotFoundException("Other Not Found");
-            var result = mapper.Map<OthersResultDto>(other);
+            var result = mapper.Map<IEnumerable<OthersResultDto>>(other);
             return result;
         }
         public async Task CreateOtherAsync(AddOthersResultDto otherDto)
@@ -36,11 +38,15 @@ namespace Apple1_Services
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task UpdateOtherAsync(AddOthersResultDto otherDto)
+        public async Task UpdateOtherAsync(OthersResultDto otherDto)
         {
-            var other = mapper.Map<Others>(otherDto);
+            var existingOther = await unitOfWork.GetRepository<Others>().GetByIdAsync(otherDto.OtherId);
+            if (existingOther == null) throw new OthersNotFoundException("Other Not Found");
+            var other = mapper.Map(otherDto,existingOther);
             unitOfWork.GetRepository<Others>().Update(other);
-            await unitOfWork.SaveChangesAsync();
+            var result= await unitOfWork.SaveChangesAsync();
+            if (result == 0) throw new Exception("Update Failed");
+
         }
         public async Task DeleteOtherAsync(int id)
         {

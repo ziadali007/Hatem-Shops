@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Apple1_Domain.Models
 {
-    public class HeadPhone : BaseEntity, IHasName
+    public class Watch : BaseEntity, IHasName
     {
        
         public decimal Price { get; set; }
-        public string? Type { get; set; }
+        public string Type { get; set; }
         
     }
 }

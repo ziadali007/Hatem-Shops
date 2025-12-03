@@ -8,8 +8,8 @@ namespace Apple1_Domain.Models
 {
     public class Sale : BaseEntity, IHasName
     {
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
+        public string Type { get; set; }
+
         public decimal Price { get; set; }
 
         public decimal Total { get; set; }  // mapped
@@ -20,6 +20,7 @@ namespace Apple1_Domain.Models
         }
 
         public DateTime Time { get; set; } = DateTime.Now;
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public int ProductId { get; set; }
     }
 }

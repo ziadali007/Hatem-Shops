@@ -21,12 +21,14 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<ChargerResultDto> GetChargerByNameAsync(string name)
+        public async Task<IEnumerable<ChargerResultDto>> GetChargerByNameAsync(string name)
         {
-            var charger =await unitOfWork.GetRepository<Charger>()
-                                .GetAsync(c => c.Name == name);
+            name = name.Replace(" ", " ").ToLower();
+            var charger = await unitOfWork.GetRepository<Charger>()
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().ToLower().Contains(name));
             if (charger == null) throw new ChargerNotFoundException("Charger Not Found");
-            var result = mapper.Map<ChargerResultDto>(charger);
+            var result = mapper.Map<IEnumerable<ChargerResultDto>>(charger);
             return result;
         }
         public async Task CreateChargerAsync(AddChargerResultDto chargerDto)
@@ -36,11 +38,15 @@ namespace Apple1_Services
             await unitOfWork.SaveChangesAsync();
         }
 
-        public Task UpdateChargerAsync(AddChargerResultDto chargerDto)
+        public async Task UpdateChargerAsync(ChargerResultDto chargerDto)
         {
-            var charger = mapper.Map<Charger>(chargerDto);
+            var existingCharger =await unitOfWork.GetRepository<Charger>().GetByIdAsync(chargerDto.ChargerId);
+            if (existingCharger == null) throw new ChargerNotFoundException("Charger Not Found");
+            var charger = mapper.Map(chargerDto,existingCharger);
             unitOfWork.GetRepository<Charger>().Update(charger);
-            return unitOfWork.SaveChangesAsync();
+            var result=await unitOfWork.SaveChangesAsync();
+            if (result == 0) throw new Exception("Update Failed");
+
         }
         public async Task DeleteChargerAsync(int id)
         {

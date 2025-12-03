@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Shared
 {
-    public class AddCableResultDto
+    public class AddWatchResultDto
     {
         [Required]
         public string Name { get; set; }
         public string Type { get; set; }
         public int Quantity { get; set; }
-
         public decimal Price { get; set; }
     }
 }

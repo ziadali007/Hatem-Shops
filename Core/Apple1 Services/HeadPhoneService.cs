@@ -21,12 +21,14 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<HeadPhoneResultDto> GetHeadPhonesByNameAsync(string name)
+        public async Task<IEnumerable<HeadPhoneResultDto>> GetHeadPhonesByNameAsync(string name)
         {
-            var headPhone =await unitOfWork.GetRepository<HeadPhone>()
-                                .GetAsync(c => c.Name == name);
+            name = name.Replace(" ", " ").ToLower();
+            var headPhone = await unitOfWork.GetRepository<HeadPhone>()
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().ToLower().Contains(name));
             if (headPhone == null) throw new HeadPhoneNotFoundException("HeadPhone Not Found");
-            var result = mapper.Map<HeadPhoneResultDto>(headPhone);
+            var result = mapper.Map<IEnumerable<HeadPhoneResultDto>>(headPhone);
             return result;
         }
 
@@ -38,11 +40,15 @@ namespace Apple1_Services
 
         }
 
-        public async Task UpdateHeadPhonesAsync(AddHeadPhoneResultDto headPhonesDto)
+        public async Task UpdateHeadPhonesAsync(HeadPhoneResultDto headPhonesDto)
         {
-            var headPhone = mapper.Map<HeadPhone>(headPhonesDto);
+            var existingHeadPhone = await unitOfWork.GetRepository<HeadPhone>().GetByIdAsync(headPhonesDto.HeadPhoneId);
+            if (existingHeadPhone == null) throw new HeadPhoneNotFoundException("HeadPhone Not Found");
+            var headPhone = mapper.Map(headPhonesDto,existingHeadPhone);
             unitOfWork.GetRepository<HeadPhone>().Update(headPhone);
-            await unitOfWork.SaveChangesAsync();
+            var result=await unitOfWork.SaveChangesAsync();
+            if (result == 0) throw new Exception("Update Failed");
+
         }
         public async Task DeleteHeadPhonesAsync(int id)
         {

@@ -24,6 +24,7 @@ namespace Apple1_Services
         public IOthersService OthersService { get; } = new OthersService(mapper, unitOfWork);
 
         public IScreenService ScreenService { get; } = new ScreenService(mapper, unitOfWork);
+        public IWatchService WatchService { get; } = new WatchService(mapper, unitOfWork);
 
         public ICoverService CoverService { get; } = new CoverService(mapper, unitOfWork);
 

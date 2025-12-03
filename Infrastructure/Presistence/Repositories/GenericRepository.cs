@@ -28,9 +28,22 @@ namespace Presistence.Repositories
         {
             return await _apple1.Set<T>().FirstOrDefaultAsync(e => e.Name == name);
         }
+
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            var entity = await _apple1.Set<T>().FindAsync(id);
+            return entity;
+        }
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await _apple1.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<T>> GetAsyncCollection(Expression<Func<T, bool>> predicate)
+        {
+            return await _apple1.Set<T>()
+                        .Where(predicate)
+                        .ToListAsync();
         }
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {

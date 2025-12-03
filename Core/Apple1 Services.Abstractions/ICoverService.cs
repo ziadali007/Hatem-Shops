@@ -11,11 +11,11 @@ namespace Apple1_Services.Abstractions
     {
         Task<IEnumerable<CoverResultDto>> GetAllCoversAsync();
 
-        Task<CoverResultDto> GetCoverByNameAsync(string name);
+        Task<IEnumerable<CoverResultDto>> GetCoverByNameAsync(string name);
 
         Task CreateCoverAsync(AddCoverResultDto coverDto);
 
-        Task UpdateCoverAsync(AddCoverResultDto coverDto);
+        Task UpdateCoverAsync(CoverResultDto coverDto);
 
         Task DeleteCoverAsync(int id);
     }
