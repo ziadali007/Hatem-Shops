@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Elsha3er_Services</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Elsha3er Presistence\Elsha3er Presistence.csproj" />
+    <ProjectReference Include="..\Elsha3er Domain\Elsha3er Domain.csproj" />
+    <ProjectReference Include="..\Elsha3er Services.Abstractions\Elsha3er Services.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

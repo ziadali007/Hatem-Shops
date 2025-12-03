@@ -1,14 +1,15 @@
 
-using Apple1_Domain.Contracts;
+using Elsha3er_Domain.Contracts;
 using Apple1_Services;
-using Apple1_Services.Abstractions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Presistence.Data;
-using Presistence.Repositories;
 using Quartz;
 using System.Reflection;
+using Elsha3er_Presistence.Data;
+using Elsha3er_Presistence.Repositories;
+using Elsha3er_Services.Abstractions;
+using Elsha3er_Services;
 namespace Apple1
 {
     public class Program
