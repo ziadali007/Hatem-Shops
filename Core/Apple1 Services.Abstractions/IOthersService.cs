@@ -10,9 +10,9 @@ namespace Apple1_Services.Abstractions
     public interface IOthersService
     {
         Task<IEnumerable<OthersResultDto>> GetAllOthersAsync();
-        Task<OthersResultDto> GetOtherByNameAsync(string name);
+        Task<IEnumerable<OthersResultDto>> GetOtherByNameAsync(string name);
         Task CreateOtherAsync(AddOthersResultDto otherDto);
-        Task UpdateOtherAsync(AddOthersResultDto otherDto);
+        Task UpdateOtherAsync(OthersResultDto otherDto);
         Task DeleteOtherAsync(int id);
     }
 }

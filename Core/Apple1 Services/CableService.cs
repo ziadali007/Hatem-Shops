@@ -21,12 +21,14 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<CableResultDto> GetCableByNameAsync(string name)
+        public async Task<IEnumerable<CableResultDto>> GetCableByNameAsync(string name)
         {
+            name = name.Replace(" ", " ").ToLower();
             var cable = await unitOfWork.GetRepository<Cable>()
-                                .GetAsync(c => c.Name == name);
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().ToLower().Contains(name));
             if (cable == null) throw new CableNotFoundException("Cable Not Found");
-            var result = mapper.Map<CableResultDto>(cable);
+            var result = mapper.Map<IEnumerable<CableResultDto>>(cable);
             return result;
         }
 
@@ -37,11 +39,15 @@ namespace Apple1_Services
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task UpdateCableAsync(AddCableResultDto cableDto)
+        public async Task UpdateCableAsync(CableResultDto cableDto)
         {
-            var cable = mapper.Map<Cable>(cableDto);
+            var existingCable = await unitOfWork.GetRepository<Cable>().GetByIdAsync(cableDto.CableId);
+            if (existingCable == null) throw new CableNotFoundException("Cable Not Found");
+            var cable = mapper.Map(cableDto,existingCable);
             unitOfWork.GetRepository<Cable>().Update(cable);
-            await unitOfWork.SaveChangesAsync();
+            var result= await unitOfWork.SaveChangesAsync();
+            if (result == 0) throw new Exception("Update Failed");
+
         }
         public async Task DeleteCableAsync(int id)
         {

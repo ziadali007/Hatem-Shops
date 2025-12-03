@@ -13,7 +13,9 @@ namespace Apple1_Services.Mapping_Profiles
     {
         public ChargerProfile()
         {
-            CreateMap<Charger, ChargerResultDto>().ReverseMap();
+            CreateMap<Charger, ChargerResultDto>().ReverseMap().ForMember(S => S.Id, SO => SO.MapFrom(Src => Src.ChargerId));
+            CreateMap<ChargerResultDto, Charger>().ReverseMap().ForMember(S => S.ChargerId, SO => SO.MapFrom(Src => Src.Id));
+
             CreateMap<AddChargerResultDto, Charger>().ReverseMap();
         }
     }

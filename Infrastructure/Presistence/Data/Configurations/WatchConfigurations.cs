@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Presistence.Data.Configurations
 {
-    public class DailySalesConfigurations : IEntityTypeConfiguration<DailySales>
+    public class WatchConfigurations : IEntityTypeConfiguration<Watch>
     {
-        public void Configure(EntityTypeBuilder<DailySales> builder)
+        public void Configure(EntityTypeBuilder<Watch> builder)
         {
-            builder.Property(DS => DS.TotalAmount).HasColumnType("decimal(18,2)");
-            builder.Property(DS => DS.Price).HasColumnType("decimal(18,2)");
+            builder.Property(w=>w.Price).HasColumnType("decimal(18,2)");
         }
     }
 }

@@ -22,17 +22,21 @@ namespace Presentation
             return Ok(sales);
         }
 
-        [HttpGet("GetTotalAmount")]
-        public async Task<IActionResult> GetSaleTotalAmount()
-        {
-            var sale = await serviceManager.SaleService.GetTodayTotalAmountAsync();
-            if (sale == null) return NotFound($"Sale Amount not found.");
-            return Ok(sale);
-        }
+        //[HttpGet("GetTotalAmount")]
+        //public async Task<IActionResult> GetSaleTotalAmount()
+        //{
+        //    var sale = await serviceManager.SaleService.GetTodayTotalAmountAsync();
+        //    if (sale == null) return NotFound($"Sale Amount not found.");
+        //    return Ok(sale);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> CreateSale([FromBody] AddSaleResultDto saleDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
             if (saleDto == null) return BadRequest("Sale data is null.");
             await serviceManager.SaleService.AddSaleAsync(saleDto);
             return Ok(saleDto);

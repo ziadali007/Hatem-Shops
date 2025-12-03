@@ -26,6 +26,7 @@ namespace Presistence.Data
         public DbSet<Charger> Chargers { get; set; }
         public DbSet<Cable> Cables { get; set; }
         public DbSet<HeadPhone> HeadPhones { get; set; }
+        public DbSet<Watch> Watches { get; set; }
         public DbSet<Others> Others { get; set; }
         public DbSet<DailySales> dailySales { get; set; }
         public DbSet<DailySalesArchive> dailySalesArchives { get; set; }

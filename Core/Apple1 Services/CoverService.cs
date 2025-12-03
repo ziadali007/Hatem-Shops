@@ -22,14 +22,16 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<CoverResultDto> GetCoverByNameAsync(string name)
+        public async Task<IEnumerable<CoverResultDto>> GetCoverByNameAsync(string name)
         {
+            name=name.Replace(" ", " ").ToLower();
             var cover = await unitOfWork.GetRepository<Cover>()
-                                .GetAsync(c => c.Name == name);
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().ToLower().Contains(name));
 
             if (cover == null) throw new CoverNotFoundException("Cover Not Found");
 
-            var result = mapper.Map<CoverResultDto>(cover);
+            var result = mapper.Map<IEnumerable<CoverResultDto>>(cover);
 
             return result;
 
@@ -42,11 +44,16 @@ namespace Apple1_Services
             await unitOfWork.SaveChangesAsync();
 
         }
-        public async Task UpdateCoverAsync(AddCoverResultDto coverDto)
+        public async Task UpdateCoverAsync(CoverResultDto coverDto)
         {
-            var cover = mapper.Map<Cover>(coverDto);
+            var existingCover = await unitOfWork.GetRepository<Cover>()
+                                        .GetByIdAsync(coverDto.CoverId);
+            if (existingCover == null) throw new CoverNotFoundException("Cover Not Found");
+            var cover = mapper.Map(coverDto,existingCover);
             unitOfWork.GetRepository<Cover>().Update(cover);
-            await unitOfWork.SaveChangesAsync();
+            var result= await unitOfWork.SaveChangesAsync();
+            if (result == 0) throw new Exception("Update Failed");
+
         }
         public async Task DeleteCoverAsync(int id)
         {

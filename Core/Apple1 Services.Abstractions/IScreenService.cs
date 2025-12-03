@@ -10,9 +10,9 @@ namespace Apple1_Services.Abstractions
     public interface IScreenService
     {
         Task<IEnumerable<ScreenResultDto>> GetAllScreensAsync();
-        Task<ScreenResultDto> GetScreenByNameAsync(string name);
+        Task<IEnumerable<ScreenResultDto>> GetScreenByNameAsync(string name);
         Task CreateScreenAsync(AddScreenResultDto screenDto);
-        Task UpdateScreenAsync(AddScreenResultDto screenDto);
+        Task UpdateScreenAsync(ScreenResultDto screenDto);
         Task DeleteScreenAsync(int id);
     }
 }

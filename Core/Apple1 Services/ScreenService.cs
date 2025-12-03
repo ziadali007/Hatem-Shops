@@ -21,12 +21,14 @@ namespace Apple1_Services
             return result;
         }
 
-        public async Task<ScreenResultDto> GetScreenByNameAsync(string name)
+        public async Task<IEnumerable<ScreenResultDto>> GetScreenByNameAsync(string name)
         {
-            var screen=await unitOfWork.GetRepository<Screen>()
-                                .GetAsync(c => c.Name == name);
+            name = name.Replace(" ", " ").ToLower();
+            var screen = await unitOfWork.GetRepository<Screen>()
+                                .GetAsyncCollection(c => c.Name.Replace(" ", "")
+                                                                    .ToLower().Contains(name));
             if (screen == null) throw new ScreenNotFoundException("Screen Not Found");
-            var result = mapper.Map<ScreenResultDto>(screen);
+            var result = mapper.Map<IEnumerable<ScreenResultDto>>(screen);
             return result;
         }
 
@@ -36,18 +38,21 @@ namespace Apple1_Services
             await unitOfWork.GetRepository<Screen>().AddAsync(screen);
             await unitOfWork.SaveChangesAsync();
         }
-        public Task UpdateScreenAsync(AddScreenResultDto screenDto)
+        public async Task UpdateScreenAsync(ScreenResultDto screenDto)
         {
-            var screen = mapper.Map<Screen>(screenDto);
+            var existingScreen =await unitOfWork.GetRepository<Screen>().GetByIdAsync(screenDto.ScreenId);
+            if (existingScreen == null) throw new ScreenNotFoundException("Screen Not Found");
+            var screen = mapper.Map(screenDto, existingScreen);
             unitOfWork.GetRepository<Screen>().Update(screen);
-            return unitOfWork.SaveChangesAsync();
+            var result=await unitOfWork.SaveChangesAsync();
+            if(result == 0) throw new Exception("Update Failed");
         }
-        public Task DeleteScreenAsync(int id)
+        public async Task DeleteScreenAsync(int id)
         {
-            var screen = unitOfWork.GetRepository<Screen>().GetAsync(c => c.Id == id);
+            var screen =await unitOfWork.GetRepository<Screen>().GetAsync(c => c.Id == id);
             if (screen == null) throw new ScreenNotFoundException("Screen Not Found");
-            unitOfWork.GetRepository<Screen>().Delete(screen.Result);
-            return unitOfWork.SaveChangesAsync();
+            unitOfWork.GetRepository<Screen>().Delete(screen);
+            await unitOfWork.SaveChangesAsync();
         }
 
     }

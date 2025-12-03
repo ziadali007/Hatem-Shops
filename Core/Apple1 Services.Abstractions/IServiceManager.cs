@@ -14,6 +14,7 @@ namespace Apple1_Services.Abstractions
         IHeadPhonesServices HeadPhoneService { get; }
         IOthersService OthersService { get; }
         IScreenService ScreenService { get; }
+        IWatchService WatchService { get; }
         ICoverService CoverService { get; }
         ISaleService SaleService { get; }
 

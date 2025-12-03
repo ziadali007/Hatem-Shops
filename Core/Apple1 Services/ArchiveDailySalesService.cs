@@ -35,24 +35,25 @@ namespace Apple1_Services
                 return Enumerable.Empty<DailySalesArchiveResultDto>();
 
             var archivedDtos = new List<DailySalesArchiveResultDto>();
+            var archivedEntities = new List<DailySalesArchive>();
 
             // 2. Archive each sale
             foreach (var sale in todaysSales)
             {
                 var archive = new DailySalesArchive
                 {
-                    ProductName = sale.ProductName,
+                    Name = sale.Name,
                     Quantity = sale.Quantity,
                     Price = sale.Price,
                     Total = sale.Quantity * sale.Price,
                     ArchivedDate = DateTime.UtcNow
                 };
 
-                await _apple1.dailySalesArchives.AddAsync(archive);
+                archivedEntities.Add(archive);
 
                 archivedDtos.Add(new DailySalesArchiveResultDto
                 {
-                    ProductName = archive.ProductName,
+                    ProductName = archive.Name,
                     Quantity = archive.Quantity,
                     Price = archive.Price,
                     Total = archive.Total,
@@ -60,8 +61,7 @@ namespace Apple1_Services
                 });
             }
 
-            // 3. Save archive entries
-            await _context.SaveChangesAsync();
+            await _apple1.dailySalesArchives.AddRangeAsync(archivedEntities);
 
             // 4. Delete today’s sales after archiving
             _apple1.Sales.RemoveRange(todaysSales);
@@ -83,7 +83,7 @@ namespace Apple1_Services
 
             var result = list.Select(a => new DailySalesArchiveResultDto
             {
-                ProductName = a.ProductName,
+                ProductName = a.Name,
                 Quantity = a.Quantity,
                 Price = a.Price,
                 Total = a.Total,
@@ -104,7 +104,7 @@ namespace Apple1_Services
                 TotalAmount = g.Sum(x => x.Total),
                 Items = g.Select(x => new ArchiveItemDto
                 {
-                    ProductName = x.ProductName,
+                    ProductName = x.Name,
                     Quantity = x.Quantity,
                     Price = x.Price,
                     Total = x.Total
